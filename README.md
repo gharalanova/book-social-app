@@ -23,5 +23,5 @@ A platform that allows users to create, manage, and share books while interactin
 Users can rate and provide notes on borrowed books.
 
 # Technologies:
-Backend: Spring Boot 3, Spring Framework 6, JWT, Spring/JSR Validation, OpenAPI, Swagger, Docker.
-Frontend: Angular, OpenAPI Generator, Bootstrap.
+- Backend: Spring Boot 3, Spring Framework 6, JWT, Spring/JSR Validation, OpenAPI, Swagger, Docker.
+- Frontend: Angular, OpenAPI Generator, Bootstrap.
