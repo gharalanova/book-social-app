@@ -1,11 +1,15 @@
 package com.projectgaby.book_social_app.auth;
 
+import com.projectgaby.book_social_app.email.EmailService;
+import com.projectgaby.book_social_app.email.EmailTemplateName;
 import com.projectgaby.book_social_app.role.RoleRepository;
 import com.projectgaby.book_social_app.user.Token;
 import com.projectgaby.book_social_app.user.TokenRepository;
 import com.projectgaby.book_social_app.user.User;
 import com.projectgaby.book_social_app.user.UserRepository;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +25,11 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
+    private final EmailService emailService;
+    @Value("${application.mailing.frontend.activation-url}")
+    private String activationUrl;
 
-    public void register(RegistrationRequest request) {
+    public void register(RegistrationRequest request) throws MessagingException {
         //1.need to assign role by default
         //2.create user object and save it
         //3.need to send a validation email (implement email send service) + crate the template email
@@ -46,9 +53,18 @@ public class AuthenticationService {
 
     }
 
-    private void sendValidationEmail(User user) {
+    private void sendValidationEmail(User user) throws MessagingException {
         var newToken = generateAndSaveActivationToken(user);
         //send email
+
+        emailService.sendEmail(
+                user.getEmail(),
+                user.fullname(),
+                EmailTemplateName.ACTIVATE_ACCOUNT,
+                activationUrl,
+                newToken,
+                "Account activation"
+        );
     }
 
     private String generateAndSaveActivationToken(User user) {
