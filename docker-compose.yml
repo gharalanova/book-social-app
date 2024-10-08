@@ -1,12 +1,12 @@
 services:
   postgres:
-    container_name: postgres-sql-bs
+    container_name: postgres-sql-bsn
     image: postgres
     environment:
       POSTGRES_USER: username
-      POSTGRES_PASSWORD: 12345
+      POSTGRES_PASSWORD: password
       PGDATA: /var/lib/postgresql/data
-      POSTGRES_DB: book_social
+      POSTGRES_DB: book_social_network
     volumes:
       - postgres:/data/postgres
     ports:
@@ -15,12 +15,11 @@ services:
       - spring-demo
     restart: unless-stopped
   mail-dev:
-    container_name: mail-dev-bs
+    container_name: mail-dev-bsn
     image: maildev/maildev
     ports:
       - 1080:1080
       - 1025:1025
-
 networks:
   spring-demo:
     driver: bridge

@@ -25,7 +25,6 @@ public class JwtService {
     private CharSequence secretKey;
 
     public String extractUsername(String token) {
-        //                          .subject(userDetails.getUsername())
         return extractClaim(token, Claims::getSubject);
     }
 

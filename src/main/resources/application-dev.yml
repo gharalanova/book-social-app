@@ -1,6 +1,7 @@
+
 spring:
   datasource:
-    url: jdbc:postgresql://localhost5432/book-social
+    url: jdbc:postgresql://localhost:5432/book_social_network
     username: username
     password: 12345
     driver-class-name: org.postgresql.Driver
@@ -17,17 +18,23 @@ spring:
     host: localhost
     port: 1025
     username: username
-    password: 123456
+    password: 12345
     properties:
       mail:
         smtp:
           trust: "*"
         auth: true
         starttls:
-          enable: true
+          enabled: true
         connectiontimeout: 5000
         timeout: 3000
         writetimeout: 5000
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+
+          issuer-uri: "http://localhost:9090/realms/book-social-network"
 
 application:
   security:
@@ -35,6 +42,11 @@ application:
       secret-key: 2C74642B7A82B7CA4FEC4C1A69991
       #to expire in a day
       expiration: 8640000
+  file:
+    uploads:
+      photos-output-path: ./uploads
   mailing:
     frontend:
       activation-url: http://localhost:4200/activate-account
+server:
+  port: 8088
